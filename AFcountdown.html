@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Air Force Programs Inspection</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;margin:0;padding:0;background:#fafafa;}
+  .wrapper{
+    width:460px;margin:20px auto;border:2px solid #0069B0;
+    padding:16px;text-align:center;background:#fff;
+  }
+  .title{
+    background:#f2f2f2;color:#0069B0;font-weight:bold;
+    margin:-16px -16px 12px -16px;padding:8px 0;font-size:1.3rem;
+  }
+  .boxes{display:flex;justify-content:space-between;gap:8px;}
+  .box{flex:1;background:#e9ecef;border-radius:4px;padding:8px 0;}
+  .value{display:block;font-size:1.7rem;color:#212529;}
+  .label{font-size:0.95rem;color:#495557;}
+</style>
+</head>
+<body>
+<div class="wrapper" id="timer">
+  <div class="title">Air Force Programs Inspection</div>
+  <div class="boxes">
+    <div class="box"><span class="value days">00</span><span class="label">Days</span></div>
+    <div class="box"><span class="value hours">00</span><span class="label">Hours</span></div>
+    <div class="box"><span class="value minutes">00</span><span class="label">Minutes</span></div>
+    <div class="box"><span class="value seconds">00</span><span class="label">Seconds</span></div>
+  </div>
+</div>
+
+<script>
+  // Target = 31 Aug 2026 12:00 PM EST  → 17:00 UTC
+  const target = new Date(Date.UTC(2026, 7, 31, 17, 0, 0));
+  const el = document.getElementById('timer');
+  const d = el.querySelector('.days');
+  const h = el.querySelector('.hours');
+  const m = el.querySelector('.minutes');
+  const s = el.querySelector('.seconds');
+
+  function tick() {
+    const now = new Date();
+    const diff = target - now;
+    if (diff <= 0) {
+      d.textContent = h.textContent = m.textContent = s.textContent = '00';
+      clearInterval(timer);
+      return;
+    }
+    d.textContent = String(Math.floor(diff / 86400000)).padStart(2, '0');
+    h.textContent = String(Math.floor(diff / 3600000 % 24)).padStart(2, '0');
+    m.textContent = String(Math.floor(diff / 60000 % 60)).padStart(2, '0');
+    s.textContent = String(Math.floor(diff / 1000 % 60)).padStart(2, '0');
+  }
+  tick();                     // first render
+  const timer = setInterval(tick, 1000);
+</script>
+</body>
+</html>
